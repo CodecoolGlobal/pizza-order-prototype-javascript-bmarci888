@@ -1,0 +1,27 @@
+{
+  "name": "pizza-order-prototype-javascript-bmarci888",
+  "version": "1.0.0",
+  "description": "No starter code is provided. Start from scratch!",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodecoolGlobal/pizza-order-prototype-javascript-bmarci888.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CodecoolGlobal/pizza-order-prototype-javascript-bmarci888/issues"
+  },
+  "homepage": "https://github.com/CodecoolGlobal/pizza-order-prototype-javascript-bmarci888#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

@@ -1,0 +1,36 @@
+{
+    "allergens": [
+        {
+            "id": 1,
+            "name": "Gluten"
+        },
+        {
+            "id": 2,
+            "name": "Lactose"
+        },
+        {
+            "id": 3,
+            "name": "Egg"
+        },
+        {
+            "id": 4,
+            "name": "Fish"
+        },
+        {
+            "id": 5,
+            "name": "Soy"
+        },
+        {
+            "id": 6,
+            "name": "Sesame"
+        },
+        {
+            "id": 7,
+            "name": "Mustard"
+        },
+        {
+            "id": 8,
+            "name": "Celery"
+        }
+    ]
+}

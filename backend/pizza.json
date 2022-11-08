@@ -1,0 +1,99 @@
+{
+  "pizza": [
+    {
+      "id": 1,
+      "name": "Hawaii",
+      "ingredients": ["tomato sauce", "mozzarella cheese", "ham", "pineapple"],
+      "price": 2390,
+      "allergens": [1, 2]
+    },
+    {
+      "id": 2,
+      "name": "Mamma Mia",
+      "ingredients": [
+        "tomato sauce",
+        "mozzarella cheese",
+        "Chicken breast",
+        "Corn",
+        "Camambert cheese",
+        "fried egg",
+        "bacon"
+      ],
+      "price": 2590,
+      "allergens": [1, 2, 3]
+    },
+    {
+      "id": 3,
+      "name": "Quattro fromaggi",
+      "ingredients": [
+        "tomato sauce",
+        "mozzarella cheese",
+        "camambert cheese",
+        "smoked cheese",
+        "parmesan cheese",
+        "oregano"
+      ],
+      "price": 2790,
+      "allergens": [1, 2]
+    },
+    {
+      "id": 4,
+      "name": "Roma",
+      "ingredients": [
+        "tomato sauce",
+        "mozzarella cheese",
+        "ham",
+        "salami",
+        "mushroom",
+        "onion",
+        "bacon",
+        "garlic"
+      ],
+      "price": 2890,
+      "allergens": [1, 2, 5, 7, 8]
+    },
+    {
+      "id": 5,
+      "name": "Mexicana",
+      "ingredients": [
+        "tomato sauce",
+        "mozzarella cheese",
+        "bolognese stew",
+        "corn",
+        "beans",
+        "spicy pepperoni"
+      ],
+      "price": 2990,
+      "allergens": [1, 2]
+    },
+    {
+      "id": 6,
+      "name": "Americano",
+      "ingredients": [
+        "tomato sauce",
+        "mozzarella cheese",
+        "smoked boston butt",
+        "cheddar cheese",
+        "fried onion",
+        "pickles",
+        "BBQ sauce"
+      ],
+      "price": 3000,
+      "allergens": [1, 2, 5, 7, 8]
+    },
+    {
+      "id": 7,
+      "name": "Napoli",
+      "ingredients": [
+        "tomato sauce",
+        "mozzarella cheese",
+        "parma ham",
+        "ruccola",
+        "parmesan cheese",
+        "extra virgin olive oil"
+      ],
+      "price": 3200,
+      "allergens": [1, 2, 5, 7, 8]
+    }
+  ]
+}

@@ -25,7 +25,7 @@ const pizzaComponent = (
       <p>${price} HUF</p>
       <p>Allergens: ${allergenNames}</p>
       <label for="amount">Amount:</label>
-      <input class="amount opacity" name="amount" id="amount-${id}" type="number" min="0">
+      <input class="amount opacity" name="amount" id="amount-${id}" type="number" min="0" value='1'>
       <button class="addToOrder buttons" id="addToOrder-${id}">Add to order</button>
     </div>
   `;
@@ -34,19 +34,22 @@ const pizzaComponent = (
 const orderComponent = () => {
   return `
   <div class="orderContainer">
+  <p>There's no pizza in your cart, pleas put at least one in it.</p>
+    <form id="customerForm" class="hide">
     <label for="customerName">Name:</label>
-    <input class="opacity input" id="customerName" name="customerName"></input>
+    <input class="opacity input" id="customerName" name="customerName" minlength="3" required type="text"></input>
     <br>
     <label for="customerEmail">Email:</label>
-    <input class="opacity input" id="customerEmail" name="customerEmail"></input>
+    <input class="opacity input" id="customerEmail" name="customerEmail" type="email" required></input>
     <br>
     <label for="customerCity">City:</label>
-    <input class="opacity input" id="customerCity" name="customerCity"></input>
+    <input class="opacity input" id="customerCity" name="customerCity" minlength="3" required type="text"></input>
     <br>
     <label for="customerStreet">Street:</label>
-    <input class="opacity input" id="customerStreet" name="customerStreet"></input>
+    <input class="opacity input" id="customerStreet" name="customerStreet" minlength="3" required type="text"></input>
     <br>
-    <button id="order" class="buttons">ORDER</button>
+    <input type="submit" id="order" class="buttons" value="ORDER"></input>
+    </form>
   </div>  
   `;
 };
@@ -63,10 +66,13 @@ const homeComponent = () => {
 
 const menuComponent = (allergens) => {
   return `
+  <div class="cartContainer">
+  <img id="cartImg" src="/public/cart.svg" alt="cart">
+  </div>
   <div class="menuContainer">
   <h1>Menu</h1>
   <div class="filterContainer">
-    ${allergens.map((allergen) => filterComponent(allergen)).join('')}
+  ${allergens.map((allergen) => filterComponent(allergen)).join('')}
   </div>
   <div class="pizzaContainer"></div>
   </div>
@@ -106,12 +112,12 @@ async function basicScript() {
 
   const pizzas = [];
   const chosenAllergens = [];
-  const filteredMenu = [...menu];
 
   root.insertAdjacentHTML('afterbegin', menuComponent(allergens));
   const menuContainer = document.querySelector('.menuContainer');
   const pizzaContainer = document.querySelector('.pizzaContainer');
   const filterContainer = document.querySelector('.filterContainer');
+  const cartContainer = document.querySelector('.cartContainer');
 
   filterContainer.addEventListener('click', (event) => {
     if (!event.target.id) return;
@@ -128,9 +134,20 @@ async function basicScript() {
       : chosenAllergens.splice(indexOfchosenAllergens, 1);
 
     console.log(chosenAllergens);
-    console.log(filteredMenu);
 
-    //filteredMenu = chosenAllergens.map((allergen) => )
+    const filteredMenu = menu.filter(
+      (pizza) =>
+        !pizza.allergens.some((allergen) => chosenAllergens.includes(allergen))
+    );
+
+    while (pizzaContainer.firstChild) {
+      pizzaContainer.removeChild(pizzaContainer.firstChild);
+    }
+
+    pizzaContainer.insertAdjacentHTML(
+      'beforeend',
+      filteredMenu.map((pizza) => pizzaComponent(pizza, allergens)).join('')
+    );
   });
 
   pizzaContainer.insertAdjacentHTML(
@@ -139,18 +156,11 @@ async function basicScript() {
   );
   menuContainer.insertAdjacentHTML('beforeend', orderComponent());
   //menuContainer.insertAdjacentHTML('beforeend', '<button id="order">ORDER</button>');
+  const orderContainer = document.querySelector('.orderContainer');
+  const customerForm = document.getElementById('customerForm');
 
-  const addToOrderBtns = Array.from(document.querySelectorAll('.addToOrder'));
-
-  addToOrderBtns.forEach((addToOrderBtn) => {
-    addToOrderBtn.addEventListener('click', (event) => {
-      const id = Number(event.target.id.split('-')[1]);
-      const amount = Number(document.getElementById(`amount-${id}`).value);
-      pizzas.push({ id, amount });
-    });
-  });
-
-  document.getElementById('order').addEventListener('click', () => {
+  customerForm.addEventListener('submit', (event) => {
+    event.preventDefault();
     const name = document.getElementById('customerName').value;
     const email = document.getElementById('customerEmail').value;
     const city = document.getElementById('customerCity').value;
@@ -165,30 +175,49 @@ async function basicScript() {
       now.getMinutes(),
     ];
 
-    fetch('/api/order', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        id: 1,
-        pizzas,
-        date: {
-          year,
-          month,
-          day,
-          hour,
-          minute,
+    console.log(name);
+
+    if (name !== '') {
+      fetch('/api/order', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
         },
-        customer: {
-          name,
-          email,
-          address: {
-            city,
-            street,
+        body: JSON.stringify({
+          id: 1,
+          pizzas,
+          date: {
+            year,
+            month,
+            day,
+            hour,
+            minute,
           },
-        },
-      }),
+          customer: {
+            name,
+            email,
+            address: {
+              city,
+              street,
+            },
+          },
+        }),
+      });
+    }
+  });
+
+  cartContainer.addEventListener('click', () =>
+    orderContainer.scrollIntoView({ behavior: 'smooth' })
+  );
+  const addToOrderBtns = Array.from(document.querySelectorAll('.addToOrder'));
+
+  addToOrderBtns.forEach((addToOrderBtn) => {
+    addToOrderBtn.addEventListener('click', (event) => {
+      const id = Number(event.target.id.split('-')[1]);
+      const amount = Number(document.getElementById(`amount-${id}`).value);
+      pizzas.push({ id, amount });
+      customerForm.classList.remove('hide');
+      orderContainer.firstElementChild.classList.add('hide');
     });
   });
 }

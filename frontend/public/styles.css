@@ -1,119 +1,141 @@
 body {
-    background-image: url('protruding-squares.svg');
+  background-image: url('protruding-squares.svg');
 }
 
 @font-face {
-    font-family: pizzaFont;
-    src: url(Lobster-Regular.ttf);
+  font-family: pizzaFont;
+  src: url(Lobster-Regular.ttf);
 }
 
 .homeContainer {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .homeImage {
-    width: 90%;
-    margin: 5% 0%;
-    border-radius: 10px;
+  width: 90%;
+  margin: 5% 0%;
+  border-radius: 10px;
 }
 
 .homeMessage {
-    position: absolute;
-    top: 21%;
-    left: 42%;
-    color: white;
-    font-size: 65px;
-    font-family: pizzaFont;
+  position: absolute;
+  top: 21%;
+  left: 42%;
+  color: white;
+  font-size: 65px;
+  font-family: pizzaFont;
 }
 
 .homeButton {
-    background-color: orange;
-    padding: 16px;
-    border-radius: 8px;
-    text-decoration: none;
-    position: absolute;
-    top: 42%;
-    left: 46%;
-    color: white;
-    font-size: 25px;
-    font-family: pizzaFont;
+  background-color: orange;
+  padding: 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  position: absolute;
+  top: 42%;
+  left: 46%;
+  color: white;
+  font-size: 25px;
+  font-family: pizzaFont;
 }
 
 .homeButton:active {
-    transform: translateY(2px);
+  transform: translateY(2px);
 }
 
 .menuContainer h1 {
-    color: white;
-    font-family: pizzaFont;
-    font-size: 40px;
+  color: white;
+  font-family: pizzaFont;
+  font-size: 40px;
 }
 
 .menuContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .pizzaCard {
-    background-image: url('istockphoto-1365125616-612x612.jpg');
-    /*background-color: #000099;*/
-    width: 26%;
-    height: 513px;
-    padding: 16px;
-    border-radius: 8px;
-    color: white;
-    text-align: center;
-    font-family: pizzaFont;
-    font-size: 20px;
+  background-image: url('istockphoto-1365125616-612x612.jpg');
+  width: 26%;
+  height: 513px;
+  padding: 16px;
+  border-radius: 8px;
+  color: white;
+  text-align: center;
+  font-family: pizzaFont;
+  font-size: 20px;
 }
 
 .pizzaContainer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    row-gap: 30px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  row-gap: 30px;
 }
 
 .amount {
-    width: 30px;
+  width: 32px;
+  height: 15px;
+  padding: 5px;
 }
 
 .pizzaImage {
-    width: 180px;
+  width: 180px;
 }
 
 .orderContainer {
-    margin-top: 30px;
-    margin-bottom: 50px;
-    background-image: url('istockphoto-1365125616-612x612.jpg');
-    /*background-color: #000099;*/
-    width: 25%;
-    height: 157px;
-    padding: 16px;
-    border-radius: 8px;
-    color: white;
-    text-align: center;
-    font-family: pizzaFont;
-    font-size: 20px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  background-image: url('istockphoto-1365125616-612x612.jpg');
+  width: 25%;
+  height: 157px;
+  padding: 16px;
+  border-radius: 8px;
+  color: white;
+  text-align: center;
+  font-family: pizzaFont;
+  font-size: 20px;
 }
 
 .buttons {
-    background-image: url('istockphoto-1365125616-612x612.jpg');
-    color: white;
-    font-size: 20px;
-    font-family: pizzaFont;
-    border-radius: 10px;
+  background-image: url('istockphoto-1365125616-612x612.jpg');
+  color: white;
+  font-size: 20px;
+  font-family: pizzaFont;
+  border-radius: 10px;
 }
 
 .opacity {
-    opacity: 0.8;
-    border-radius: 10px;
+  opacity: 0.8;
+  border-radius: 10px;
 }
 
 .input {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+.filterContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+
+.filterBtnActive {
+  background-color: lightgreen;
+}
+
+#cartImg {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.hide {
+  display: none;
 }

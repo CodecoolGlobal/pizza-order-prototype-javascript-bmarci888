@@ -1,0 +1,72 @@
+body {
+    background-image: url('endless-constellation.svg');
+}
+
+.homeContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.homeImage {
+    width: 90%;
+    margin: 5% 0%;
+}
+
+.homeMessage {
+    position: absolute;
+    top: 21%;
+    left: 42%;
+    color: white;
+    font-size: 65px;
+}
+
+.homeButton {
+    background-color: #000099;
+    padding: 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    position: absolute;
+    top: 42%;
+    left: 46%;
+    color: white;
+    font-size: 25px;
+}
+
+.homeButton:active {
+    transform: translateY(2px);
+}
+
+.menuContainer h1 {
+    color: white;
+}
+
+.menuContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pizzaCard {
+    background-color: #000099;
+    width: 25%;
+    height: 383px;
+    padding: 16px;
+    border-radius: 8px;
+    color: white;
+}
+
+.pizzaContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.amount {
+    width: 30px;
+}
+
+.pizzaImage {
+    width: 150px;
+}

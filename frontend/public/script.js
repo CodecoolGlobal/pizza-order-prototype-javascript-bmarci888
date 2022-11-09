@@ -18,14 +18,15 @@ const pizzaComponent = (
     .join(', ');
 
   return `
-    <div>
+    <div class="pizzaCard">
+    <img class="pizzaImage" src="/public/pngegg.png">
       <p>Name: ${name}</p>
       <p>Ingredients:</p>
       <ul>${listComponent(ingredients)}</ul>
       <p>Price: ${price}</p>
       <p>Allergens: ${allergenNames}</p>
       <label for="amount">Amount:</label>
-      <input name="amount" id="amount-${id}" type="number" min="0">
+      <input class="amount" name="amount" id="amount-${id}" type="number" min="0">
       <button class="addToOrder" id="addToOrder-${id}">Add to order</button>
     </div>
   `;
@@ -49,6 +50,25 @@ const orderComponent = () => {
   `;
 };
 
+const homeComponent = () => {
+  return `
+  <div class="homeContainer">
+  <h2 class="homeMessage">Welcome!</h2>
+  <a class="homeButton" href="/pizza/list">Let's Order!</a>
+  <img class="homeImage" src="/public/aurelien-lemasson-theobald-x00czbt4dfk-unsplash-3.jpg">
+  </div>
+  `
+}
+
+const menuComponent = () => {
+  return `
+  <div class="menuContainer">
+  <h1>Menu</h1>
+  <div class="pizzaContainer"></div>
+  </div>
+  `
+}
+
 const root = document.getElementById('root');
 
 window.addEventListener('load', () => {
@@ -67,7 +87,7 @@ window.addEventListener('load', () => {
 });
 
 function home() {
-  root.insertAdjacentHTML('afterend', '<a href="/pizza/list">Welcome</a>');
+  root.insertAdjacentHTML('afterbegin', homeComponent());
 }
 
 async function basicScript() {
@@ -76,12 +96,16 @@ async function basicScript() {
 
   const pizzas = [];
 
-  root.insertAdjacentHTML(
-    'afterbegin',
+  root.insertAdjacentHTML('afterbegin', menuComponent());
+  const menuContainer = document.querySelector('.menuContainer');
+  const pizzaContainer = document.querySelector('.pizzaContainer');
+
+  pizzaContainer.insertAdjacentHTML(
+    'beforeend',
     menu.map((pizza) => pizzaComponent(pizza, allergens)).join('')
   );
-  root.insertAdjacentHTML('beforeend', orderComponent());
-  root.insertAdjacentHTML('beforeend', '<button id="order">ORDER</button>');
+  menuContainer.insertAdjacentHTML('beforeend', orderComponent());
+  menuContainer.insertAdjacentHTML('beforeend', '<button id="order">ORDER</button>');
 
   const addToOrderBtns = Array.from(document.querySelectorAll('.addToOrder'));
 

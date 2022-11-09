@@ -8,8 +8,9 @@ const listComponent = (list) => {
     .join('');
 };
 
+
 const pizzaComponent = (
-  { id, name, ingredients, price, allergens },
+  { id, name, ingredients, price, allergens, pizzaUrl },
   allergenList
 ) => {
   const allergenNames = allergenList
@@ -17,35 +18,37 @@ const pizzaComponent = (
     .map((element) => element.name)
     .join(', ');
 
+
   return `
     <div class="pizzaCard">
-    <img class="pizzaImage" src="/public/pngegg.png">
-      <p>Name: ${name}</p>
-      <p>Ingredients:</p>
-      <ul>${listComponent(ingredients)}</ul>
-      <p>Price: ${price}</p>
+    <img class="pizzaImage" src=${pizzaUrl}>
+      <p>${name}</p>
+      <p>${ingredients}<p>
+      <p>${price} HUF</p>
       <p>Allergens: ${allergenNames}</p>
       <label for="amount">Amount:</label>
-      <input class="amount" name="amount" id="amount-${id}" type="number" min="0">
-      <button class="addToOrder" id="addToOrder-${id}">Add to order</button>
+      <input class="amount opacity" name="amount" id="amount-${id}" type="number" min="0">
+      <button class="addToOrder buttons" id="addToOrder-${id}">Add to order</button>
     </div>
   `;
 };
 
 const orderComponent = () => {
   return `
-  <div>
+  <div class="orderContainer">
     <label for="customerName">Name:</label>
-    <input id="customerName" name="customerName"></input>
+    <input class="opacity input" id="customerName" name="customerName"></input>
     <br>
     <label for="customerEmail">Email:</label>
-    <input id="customerEmail" name="customerEmail"></input>
+    <input class="opacity input" id="customerEmail" name="customerEmail"></input>
     <br>
     <label for="customerCity">City:</label>
-    <input id="customerCity" name="customerCity"></input>
+    <input class="opacity input" id="customerCity" name="customerCity"></input>
     <br>
     <label for="customerStreet">Street:</label>
-    <input id="customerStreet" name="customerStreet"></input>
+    <input class="opacity input" id="customerStreet" name="customerStreet"></input>
+    <br>
+    <button id="order" class="buttons">ORDER</button>
   </div>  
   `;
 };
@@ -105,7 +108,7 @@ async function basicScript() {
     menu.map((pizza) => pizzaComponent(pizza, allergens)).join('')
   );
   menuContainer.insertAdjacentHTML('beforeend', orderComponent());
-  menuContainer.insertAdjacentHTML('beforeend', '<button id="order">ORDER</button>');
+  //menuContainer.insertAdjacentHTML('beforeend', '<button id="order">ORDER</button>');
 
   const addToOrderBtns = Array.from(document.querySelectorAll('.addToOrder'));
 

@@ -1,5 +1,10 @@
 body {
-    background-image: url('endless-constellation.svg');
+    background-image: url('protruding-squares.svg');
+}
+
+@font-face {
+    font-family: pizzaFont;
+    src: url(Lobster-Regular.ttf);
 }
 
 .homeContainer {
@@ -10,6 +15,7 @@ body {
 .homeImage {
     width: 90%;
     margin: 5% 0%;
+    border-radius: 10px;
 }
 
 .homeMessage {
@@ -18,10 +24,11 @@ body {
     left: 42%;
     color: white;
     font-size: 65px;
+    font-family: pizzaFont;
 }
 
 .homeButton {
-    background-color: #000099;
+    background-color: orange;
     padding: 16px;
     border-radius: 8px;
     text-decoration: none;
@@ -30,6 +37,7 @@ body {
     left: 46%;
     color: white;
     font-size: 25px;
+    font-family: pizzaFont;
 }
 
 .homeButton:active {
@@ -38,6 +46,8 @@ body {
 
 .menuContainer h1 {
     color: white;
+    font-family: pizzaFont;
+    font-size: 40px;
 }
 
 .menuContainer {
@@ -47,12 +57,16 @@ body {
 }
 
 .pizzaCard {
-    background-color: #000099;
-    width: 25%;
-    height: 383px;
+    background-image: url('istockphoto-1365125616-612x612.jpg');
+    /*background-color: #000099;*/
+    width: 26%;
+    height: 513px;
     padding: 16px;
     border-radius: 8px;
     color: white;
+    text-align: center;
+    font-family: pizzaFont;
+    font-size: 20px;
 }
 
 .pizzaContainer {
@@ -61,6 +75,7 @@ body {
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
+    row-gap: 30px;
 }
 
 .amount {
@@ -68,5 +83,37 @@ body {
 }
 
 .pizzaImage {
-    width: 150px;
+    width: 180px;
+}
+
+.orderContainer {
+    margin-top: 30px;
+    margin-bottom: 50px;
+    background-image: url('istockphoto-1365125616-612x612.jpg');
+    /*background-color: #000099;*/
+    width: 25%;
+    height: 157px;
+    padding: 16px;
+    border-radius: 8px;
+    color: white;
+    text-align: center;
+    font-family: pizzaFont;
+    font-size: 20px;
+}
+
+.buttons {
+    background-image: url('istockphoto-1365125616-612x612.jpg');
+    color: white;
+    font-size: 20px;
+    font-family: pizzaFont;
+    border-radius: 10px;
+}
+
+.opacity {
+    opacity: 0.8;
+    border-radius: 10px;
+}
+
+.input {
+    margin-bottom: 5px;
 }

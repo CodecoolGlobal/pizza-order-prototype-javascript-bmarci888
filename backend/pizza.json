@@ -3,15 +3,24 @@
     {
       "id": 1,
       "name": "Hawaii",
-      "ingredients": ["tomato sauce", "mozzarella cheese", "ham", "pineapple"],
+      "ingredients": [
+        "Tomato sauce",
+        "mozzarella cheese",
+        "ham",
+        "pineapple"
+      ],
       "price": 2390,
-      "allergens": [1, 2]
+      "allergens": [
+        1,
+        2
+      ],
+      "pizzaUrl": "/public/pngegg-2.png"
     },
     {
       "id": 2,
       "name": "Mamma Mia",
       "ingredients": [
-        "tomato sauce",
+        "Tomato sauce",
         "mozzarella cheese",
         "Chicken breast",
         "Corn",
@@ -20,13 +29,18 @@
         "bacon"
       ],
       "price": 2590,
-      "allergens": [1, 2, 3]
+      "allergens": [
+        1,
+        2,
+        3
+      ],
+      "pizzaUrl": "/public/pngegg.png"
     },
     {
       "id": 3,
       "name": "Quattro fromaggi",
       "ingredients": [
-        "tomato sauce",
+        "Tomato sauce",
         "mozzarella cheese",
         "camambert cheese",
         "smoked cheese",
@@ -34,13 +48,17 @@
         "oregano"
       ],
       "price": 2790,
-      "allergens": [1, 2]
+      "allergens": [
+        1,
+        2
+      ],
+      "pizzaUrl": "/public/pngegg-3.png"
     },
     {
       "id": 4,
       "name": "Roma",
       "ingredients": [
-        "tomato sauce",
+        "Tomato sauce",
         "mozzarella cheese",
         "ham",
         "salami",
@@ -50,13 +68,20 @@
         "garlic"
       ],
       "price": 2890,
-      "allergens": [1, 2, 5, 7, 8]
+      "allergens": [
+        1,
+        2,
+        5,
+        7,
+        8
+      ],
+      "pizzaUrl": "/public/pngegg-4.png"
     },
     {
       "id": 5,
       "name": "Mexicana",
       "ingredients": [
-        "tomato sauce",
+        "Tomato sauce",
         "mozzarella cheese",
         "bolognese stew",
         "corn",
@@ -64,13 +89,17 @@
         "spicy pepperoni"
       ],
       "price": 2990,
-      "allergens": [1, 2]
+      "allergens": [
+        1,
+        2
+      ],
+      "pizzaUrl": "/public/pngegg-5.png"
     },
     {
       "id": 6,
       "name": "Americano",
       "ingredients": [
-        "tomato sauce",
+        "Tomato sauce",
         "mozzarella cheese",
         "smoked boston butt",
         "cheddar cheese",
@@ -79,13 +108,20 @@
         "BBQ sauce"
       ],
       "price": 3000,
-      "allergens": [1, 2, 5, 7, 8]
+      "allergens": [
+        1,
+        2,
+        5,
+        7,
+        8
+      ],
+      "pizzaUrl": "/public/pngegg-7.png"
     },
     {
       "id": 7,
       "name": "Napoli",
       "ingredients": [
-        "tomato sauce",
+        "Tomato sauce",
         "mozzarella cheese",
         "parma ham",
         "ruccola",
@@ -93,7 +129,14 @@
         "extra virgin olive oil"
       ],
       "price": 3200,
-      "allergens": [1, 2, 5, 7, 8]
+      "allergens": [
+        1,
+        2,
+        5,
+        7,
+        8
+      ],
+      "pizzaUrl": "/public/pngegg-6.png"
     }
   ]
 }

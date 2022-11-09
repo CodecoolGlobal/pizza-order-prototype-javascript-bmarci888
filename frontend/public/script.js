@@ -8,7 +8,6 @@ const listComponent = (list) => {
     .join('');
 };
 
-
 const pizzaComponent = (
   { id, name, ingredients, price, allergens, pizzaUrl },
   allergenList
@@ -17,7 +16,6 @@ const pizzaComponent = (
     .filter((allergen) => allergens.includes(allergen.id))
     .map((element) => element.name)
     .join(', ');
-
 
   return `
     <div class="pizzaCard">
@@ -60,17 +58,26 @@ const homeComponent = () => {
   <a class="homeButton" href="/pizza/list">Let's Order!</a>
   <img class="homeImage" src="/public/aurelien-lemasson-theobald-x00czbt4dfk-unsplash-3.jpg">
   </div>
-  `
-}
+  `;
+};
 
-const menuComponent = () => {
+const menuComponent = (allergens) => {
   return `
   <div class="menuContainer">
   <h1>Menu</h1>
+  <div class="filterContainer">
+    ${allergens.map((allergen) => filterComponent(allergen)).join('')}
+  </div>
   <div class="pizzaContainer"></div>
   </div>
-  `
-}
+  `;
+};
+
+const filterComponent = (allergen) => {
+  return `
+  <button id="allergen-${allergen.id}">${allergen.name}</button>
+  `;
+};
 
 const root = document.getElementById('root');
 
@@ -98,10 +105,33 @@ async function basicScript() {
   const allergens = await (await fetch('/api/allergens')).json();
 
   const pizzas = [];
+  const chosenAllergens = [];
+  const filteredMenu = [...menu];
 
-  root.insertAdjacentHTML('afterbegin', menuComponent());
+  root.insertAdjacentHTML('afterbegin', menuComponent(allergens));
   const menuContainer = document.querySelector('.menuContainer');
   const pizzaContainer = document.querySelector('.pizzaContainer');
+  const filterContainer = document.querySelector('.filterContainer');
+
+  filterContainer.addEventListener('click', (event) => {
+    if (!event.target.id) return;
+    const id = Number(event.target.id.split('-')[1]);
+    const filterBtn = document.getElementById(`allergen-${id}`).classList;
+    filterBtn.contains('filterBtnActive')
+      ? filterBtn.remove('filterBtnActive')
+      : filterBtn.add('filterBtnActive');
+    const indexOfchosenAllergens = chosenAllergens.findIndex(
+      (element) => element === id
+    );
+    indexOfchosenAllergens === -1
+      ? chosenAllergens.push(id)
+      : chosenAllergens.splice(indexOfchosenAllergens, 1);
+
+    console.log(chosenAllergens);
+    console.log(filteredMenu);
+
+    //filteredMenu = chosenAllergens.map((allergen) => )
+  });
 
   pizzaContainer.insertAdjacentHTML(
     'beforeend',

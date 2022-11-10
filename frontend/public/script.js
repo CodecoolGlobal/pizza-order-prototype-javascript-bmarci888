@@ -21,31 +21,44 @@ window.addEventListener('load', () => {
   }
 });
 
+// Display home page
 function home() {
   root.insertAdjacentHTML('afterbegin', homeComponent());
 }
 
+// Display pizza menu page
 async function pizzaMenu() {
+  // Fetch data
   const menu = await (await fetch('/api/pizza')).json();
   const allergens = await (await fetch('/api/allergens')).json();
 
+  // Orderd pizzas
   let pizzas = [];
+  // Filtered allergens
   const chosenAllergens = [];
 
+  // Add skeleton
   root.insertAdjacentHTML('afterbegin', menuComponent(allergens));
+
   const menuContainer = document.querySelector('.menuContainer');
   const pizzaContainer = document.querySelector('.pizzaContainer');
   const filterContainer = document.querySelector('.filterContainer');
   const cartContainer = document.querySelector('.cartContainer');
   const cartCounter = document.getElementById('cartCounter');
 
+  // Add click event listener to filter buttons
   filterContainer.addEventListener('click', (event) => {
     if (!event.target.id) return;
+    // Get clicked allergen id
     const id = Number(event.target.id.split('-')[1]);
-    const filterBtn = document.getElementById(`allergen-${id}`).classList;
-    filterBtn.contains('filterBtnActive')
-      ? filterBtn.remove('filterBtnActive')
-      : filterBtn.add('filterBtnActive');
+    const filterBtnClasses = document.getElementById(
+      `allergen-${id}`
+    ).classList;
+    // Change appearence based on chosen status
+    filterBtnClasses.contains('filterBtnActive')
+      ? filterBtnClasses.remove('filterBtnActive')
+      : filterBtnClasses.add('filterBtnActive');
+    // Add/Remove allergen to/from chosenAllergens
     const indexOfchosenAllergens = chosenAllergens.findIndex(
       (element) => element === id
     );
@@ -53,11 +66,13 @@ async function pizzaMenu() {
       ? chosenAllergens.push(id)
       : chosenAllergens.splice(indexOfchosenAllergens, 1);
 
+    // Filter out pizzas by chosen allergens
     const filteredMenu = menu.filter(
       (pizza) =>
         !pizza.allergens.some((allergen) => chosenAllergens.includes(allergen))
     );
 
+    // Update DOM
     removeAllChildren(pizzaContainer);
 
     pizzaContainer.insertAdjacentHTML(
@@ -73,14 +88,17 @@ async function pizzaMenu() {
     );
   });
 
+  // Add pizza cards to the container
   pizzaContainer.insertAdjacentHTML(
     'beforeend',
     menu.map((pizza) => pizzaComponent(pizza, allergens)).join('')
   );
+  // Add order component to the container
   menuContainer.insertAdjacentHTML('beforeend', orderComponent());
   const orderContainer = document.querySelector('.orderContainer');
   const customerForm = document.getElementById('customerForm');
 
+  // Handle form submition
   customerForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     const name = document.getElementById('customerName').value;
@@ -90,6 +108,7 @@ async function pizzaMenu() {
 
     try {
       console.log(pizzas, 'orderBtn');
+      // Send POST request to /api/order
       const response = await postOrder(pizzas, name, email, city, street);
       if (response.ok) {
         document.getElementById('orders').classList.add('hide');
@@ -99,9 +118,12 @@ async function pizzaMenu() {
           'Thank you for order. Pizza will be on the way soon.';
         pizzas = [];
         cartCounter.textContent = pizzas.length;
+        cartCounter.style.display = 'none';
       }
     } catch (err) {
       console.log(err);
+      document.getElementById('orders').classList.add('hide');
+      customerForm.classList.add('hide');
       orderContainer.firstElementChild.classList.remove('hide');
       orderContainer.firstElementChild.textContent =
         'Sorry, something went wrong. Please try again later!';
@@ -129,7 +151,7 @@ function prepareAddToOrderBtns(
   customerForm
 ) {
   const addToOrderBtns = Array.from(document.querySelectorAll('.addToOrder'));
-
+  // Handle pizzas array content and display it accordingly
   addToOrderBtns.forEach((addToOrderBtn) => {
     addToOrderBtn.addEventListener('click', (event) => {
       const id = Number(event.target.id.split('-')[1]);
@@ -142,9 +164,9 @@ function prepareAddToOrderBtns(
         pizzas.push({ id, amount });
       }
 
-      console.log(pizzas, 'afteradded');
-
       const orderPart = document.getElementById('orders');
+
+      // Update DOM
       removeAllChildren(orderPart);
       orderPart.insertAdjacentHTML(
         'beforeend',
@@ -171,6 +193,7 @@ function removeAllChildren(parent) {
   }
 }
 
+// Remove/Decrease amount of ordered pizzas
 function removeOrder(event, pizzas, menu, orderContainer, orderPart) {
   const indexOfRemoved = pizzas.findIndex(
     (pizza) => pizza.id === Number(event.target.id)
@@ -185,6 +208,7 @@ function removeOrder(event, pizzas, menu, orderContainer, orderPart) {
   } else {
     cartCounter.textContent = pizzas.length;
   }
+  // Update DOM
   removeAllChildren(orderPart);
   orderPart.insertAdjacentHTML(
     'beforeend',

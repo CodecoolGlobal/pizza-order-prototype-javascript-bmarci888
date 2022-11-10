@@ -2,7 +2,7 @@ const orderComponent = () => {
   return `
   <div class="orderContainer">
     <p>There's no pizza in your cart, please put at least one in it.</p>
-    <p class"hide" id="orders"></p>
+    <div id="orders"></div>
     <form id="customerForm" class="hide">
       <label for="customerName">Name:</label>
       <input class="opacity input" id="customerName" name="customerName" minlength="3" required type="text"></input>

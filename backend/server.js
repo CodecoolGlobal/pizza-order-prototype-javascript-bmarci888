@@ -7,31 +7,10 @@ const frontendPath = path.join(`${__dirname}/../frontend/`);
 app.use('/public', express.static(`${frontendPath}/public`));
 app.use(express.json());
 
-const orders = [
-  {
-    id: 1,
-    pizzas: [{ id: 1, amount: 2 }],
-    date: {
-      year: 2022,
-      month: 6,
-      day: 7,
-      hour: 18,
-      minute: 47,
-    },
-    customer: {
-      name: 'John Doe',
-      email: 'jd@example.com',
-      address: {
-        city: 'Palermo',
-        street: 'Via Appia 6',
-      },
-    },
-  },
-];
+const orders = [];
 
 app.get('/', async (req, res) => {
   res.sendFile(path.join(`${frontendPath}/index.html`));
-  //res.redirect('/pizza/list');
 });
 
 app.get('/api/pizza', async (req, res) => {

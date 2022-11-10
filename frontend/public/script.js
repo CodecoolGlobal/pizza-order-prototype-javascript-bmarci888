@@ -29,7 +29,7 @@ async function pizzaMenu() {
   const menu = await (await fetch('/api/pizza')).json();
   const allergens = await (await fetch('/api/allergens')).json();
 
-  const pizzas = [];
+  let pizzas = [];
   const chosenAllergens = [];
 
   root.insertAdjacentHTML('afterbegin', menuComponent(allergens));
@@ -37,6 +37,7 @@ async function pizzaMenu() {
   const pizzaContainer = document.querySelector('.pizzaContainer');
   const filterContainer = document.querySelector('.filterContainer');
   const cartContainer = document.querySelector('.cartContainer');
+  const cartCounter = document.getElementById('cartCounter');
 
   filterContainer.addEventListener('click', (event) => {
     if (!event.target.id) return;
@@ -63,7 +64,13 @@ async function pizzaMenu() {
       'beforeend',
       filteredMenu.map((pizza) => pizzaComponent(pizza, allergens)).join('')
     );
-    prepareAddToOrderBtns(pizzas, menu, orderContainer);
+    prepareAddToOrderBtns(
+      pizzas,
+      menu,
+      orderContainer,
+      cartCounter,
+      customerForm
+    );
   });
 
   pizzaContainer.insertAdjacentHTML(
@@ -81,18 +88,46 @@ async function pizzaMenu() {
     const city = document.getElementById('customerCity').value;
     const street = document.getElementById('customerStreet').value;
 
-    const response = await postOrder(pizzas, name, email, city, street);
-    console.log(response);
+    try {
+      console.log(pizzas, 'orderBtn');
+      const response = await postOrder(pizzas, name, email, city, street);
+      if (response.ok) {
+        document.getElementById('orders').classList.add('hide');
+        customerForm.classList.add('hide');
+        orderContainer.firstElementChild.classList.remove('hide');
+        orderContainer.firstElementChild.textContent =
+          'Thank you for order. Pizza will be on the way soon.';
+        pizzas = [];
+        cartCounter.textContent = pizzas.length;
+      }
+    } catch (err) {
+      console.log(err);
+      orderContainer.firstElementChild.classList.remove('hide');
+      orderContainer.firstElementChild.textContent =
+        'Sorry, something went wrong. Please try again later!';
+    }
   });
 
   cartContainer.addEventListener('click', () =>
     orderContainer.scrollIntoView({ behavior: 'smooth' })
   );
 
-  prepareAddToOrderBtns(pizzas, menu, orderContainer);
+  prepareAddToOrderBtns(
+    pizzas,
+    menu,
+    orderContainer,
+    cartCounter,
+    customerForm
+  );
 }
 
-function prepareAddToOrderBtns(pizzas, menu, orderContainer) {
+function prepareAddToOrderBtns(
+  pizzas,
+  menu,
+  orderContainer,
+  cartCounter,
+  customerForm
+) {
   const addToOrderBtns = Array.from(document.querySelectorAll('.addToOrder'));
 
   addToOrderBtns.forEach((addToOrderBtn) => {
@@ -107,6 +142,8 @@ function prepareAddToOrderBtns(pizzas, menu, orderContainer) {
         pizzas.push({ id, amount });
       }
 
+      console.log(pizzas, 'afteradded');
+
       const orderPart = document.getElementById('orders');
       removeAllChildren(orderPart);
       orderPart.insertAdjacentHTML(
@@ -114,32 +151,13 @@ function prepareAddToOrderBtns(pizzas, menu, orderContainer) {
         cartComponent(pizzas, menu).join('')
       );
 
-      console.log(pizzas);
       document.querySelectorAll('.removeButton').forEach((item) => {
-        item.addEventListener('click', (event) => {
-          console.log(parseInt(event.target.id));
-          pizzas.forEach((element) =>
-            element.id === parseInt(event.target.id)
-              ? (element.amount = element.amount - 1)
-              : element
-          );
-          pizzas.forEach((element) =>
-            element.amount < 1
-              ? pizzas.splice(pizzas.indexOf(element), 1)
-              : element
-          );
-          removeAllChildren(orderPart);
-          orderPart.insertAdjacentHTML(
-            'beforeend',
-            cartComponent(pizzas, menu).join('')
-          );
-          console.log('hello');
-          console.log(pizzas);
-        });
+        item.addEventListener('click', (event) =>
+          removeOrder(event, pizzas, menu, orderContainer, orderPart)
+        );
       });
 
       customerForm.classList.remove('hide');
-      const cartCounter = document.getElementById('cartCounter');
       cartCounter.style.display = 'flex';
       cartCounter.textContent = pizzas.length;
       orderContainer.firstElementChild.classList.add('hide');
@@ -151,6 +169,33 @@ function removeAllChildren(parent) {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
   }
+}
+
+function removeOrder(event, pizzas, menu, orderContainer, orderPart) {
+  const indexOfRemoved = pizzas.findIndex(
+    (pizza) => pizza.id === Number(event.target.id)
+  );
+
+  pizzas[indexOfRemoved].amount -= 1;
+  if (pizzas[indexOfRemoved].amount < 1) pizzas.splice(indexOfRemoved, 1);
+  if (pizzas.length === 0) {
+    cartCounter.style.display = 'none';
+    customerForm.classList.add('hide');
+    orderContainer.firstElementChild.classList.remove('hide');
+  } else {
+    cartCounter.textContent = pizzas.length;
+  }
+  removeAllChildren(orderPart);
+  orderPart.insertAdjacentHTML(
+    'beforeend',
+    cartComponent(pizzas, menu).join('')
+  );
+
+  document.querySelectorAll('.removeButton').forEach((item) => {
+    item.addEventListener('click', (event) =>
+      removeOrder(event, pizzas, menu, orderContainer, orderPart)
+    );
+  });
 }
 
 function postOrder(pizzas, name, email, city, street) {

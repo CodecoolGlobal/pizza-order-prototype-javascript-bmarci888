@@ -21,7 +21,7 @@ const pizzaComponent = (
     <div class="pizzaCard">
     <img class="pizzaImage" src=${pizzaUrl}>
       <p>${name}</p>
-      <p>${ingredients}<p>
+      <p>${ingredients.join(', ')}<p>
       <p>${price} HUF</p>
       <p>Allergens: ${allergenNames}</p>
       <label for="amount">Amount:</label>
@@ -34,7 +34,7 @@ const pizzaComponent = (
 const orderComponent = () => {
   return `
   <div class="orderContainer">
-  <p>There's no pizza in your cart, pleas put at least one in it.</p>
+  <p>There's no pizza in your cart, please put at least one in it.</p>
     <form id="customerForm" class="hide">
     <label for="customerName">Name:</label>
     <input class="opacity input" id="customerName" name="customerName" minlength="3" required type="text"></input>
@@ -81,7 +81,7 @@ const menuComponent = (allergens) => {
 
 const filterComponent = (allergen) => {
   return `
-  <button id="allergen-${allergen.id}">${allergen.name}</button>
+  <button class="buttons" id="allergen-${allergen.id}">${allergen.name}</button>
   `;
 };
 

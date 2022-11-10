@@ -92,7 +92,7 @@ body {
   margin-bottom: 50px;
   background-image: url('istockphoto-1365125616-612x612.jpg');
   width: 25%;
-  height: 157px;
+  height: fit-content;
   padding: 16px;
   border-radius: 8px;
   color: white;

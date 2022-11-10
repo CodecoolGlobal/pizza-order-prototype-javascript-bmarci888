@@ -35,6 +35,7 @@ const orderComponent = () => {
   return `
   <div class="orderContainer">
   <p>There's no pizza in your cart, please put at least one in it.</p>
+  <p class"hide" id="orders"></p>
     <form id="customerForm" class="hide">
     <label for="customerName">Name:</label>
     <input class="opacity input" id="customerName" name="customerName" minlength="3" required type="text"></input>
@@ -112,6 +113,11 @@ async function basicScript() {
 
   const pizzas = [];
   const chosenAllergens = [];
+
+  const cartComponent = pizzas => pizzas.map(element => `
+  <p>${element.amount}  ${menu[element.id - 1].name}   <button id="${element.id}" class="removeButton buttons">Remove</button></p>
+  `);
+
 
   root.insertAdjacentHTML('afterbegin', menuComponent(allergens));
   const menuContainer = document.querySelector('.menuContainer');
@@ -216,8 +222,33 @@ async function basicScript() {
       const id = Number(event.target.id.split('-')[1]);
       const amount = Number(document.getElementById(`amount-${id}`).value);
       pizzas.push({ id, amount });
+
+      const orderPart = document.getElementById('orders');
+      removeAllChildren(orderPart);
+      orderPart.insertAdjacentHTML('beforeend', cartComponent(pizzas).join(''));
+
+      console.log(pizzas);
+      document.querySelectorAll('.removeButton').forEach(item => {
+        item.addEventListener('click', event => {
+          console.log(parseInt(event.target.id));
+          pizzas.forEach(element => element.id === parseInt(event.target.id) ? element.amount = element.amount - 1 : element);
+          pizzas.forEach(element => element.amount < 1 ? pizzas.splice(pizzas.indexOf(element), 1) : element);
+          removeAllChildren(orderPart);
+          orderPart.insertAdjacentHTML('beforeend', cartComponent(pizzas).join(''));
+          console.log('hello');
+          console.log(pizzas);
+        })
+      })
+
       customerForm.classList.remove('hide');
       orderContainer.firstElementChild.classList.add('hide');
     });
   });
+}
+
+
+function removeAllChildren(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
 }

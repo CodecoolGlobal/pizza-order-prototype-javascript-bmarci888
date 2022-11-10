@@ -1,13 +1,3 @@
-const listComponent = (list) => {
-  return list
-    .map(
-      (element) => `
-  <li>${element}</li>
-  `
-    )
-    .join('');
-};
-
 const pizzaComponent = (
   { id, name, ingredients, price, allergens, pizzaUrl },
   allergenList
@@ -25,7 +15,7 @@ const pizzaComponent = (
       <p>${price} HUF</p>
       <p>Allergens: ${allergenNames}</p>
       <label for="amount">Amount:</label>
-      <input class="amount opacity" name="amount" id="amount-${id}" type="number" min="0" value='1'>
+      <input class="amount opacity" name="amount" id="amount-${id}" type="number" min="1" value='1' required>
       <button class="addToOrder buttons" id="addToOrder-${id}">Add to order</button>
     </div>
   `;
@@ -69,6 +59,7 @@ const menuComponent = (allergens) => {
   return `
   <div class="cartContainer">
   <img id="cartImg" src="/public/cart.svg" alt="cart">
+  <div id="cartCounter">0</div>
   </div>
   <div class="menuContainer">
   <h1>Menu</h1>
@@ -114,10 +105,14 @@ async function basicScript() {
   const pizzas = [];
   const chosenAllergens = [];
 
-  const cartComponent = pizzas => pizzas.map(element => `
-  <p>${element.amount}  ${menu[element.id - 1].name}   <button id="${element.id}" class="removeButton buttons">Remove</button></p>
-  `);
-
+  const cartComponent = (pizzas) =>
+    pizzas.map(
+      (element) => `
+  <p>${element.amount}  ${menu[element.id - 1].name}   <button id="${
+        element.id
+      }" class="removeButton buttons">Remove</button></p>
+  `
+    );
 
   root.insertAdjacentHTML('afterbegin', menuComponent(allergens));
   const menuContainer = document.querySelector('.menuContainer');
@@ -154,6 +149,28 @@ async function basicScript() {
       'beforeend',
       filteredMenu.map((pizza) => pizzaComponent(pizza, allergens)).join('')
     );
+
+    const addToOrderBtns = Array.from(document.querySelectorAll('.addToOrder'));
+
+    addToOrderBtns.forEach((addToOrderBtn) => {
+      addToOrderBtn.addEventListener('click', (event) => {
+        const id = Number(event.target.id.split('-')[1]);
+        const amount = Number(document.getElementById(`amount-${id}`).value);
+        if (amount < 1) return;
+        const index = pizzas.findIndex((pizza) => pizza.id === id);
+        if (index !== -1) {
+          pizzas[index].amount += amount;
+        } else {
+          pizzas.push({ id, amount });
+        }
+        const cartCounter = document.getElementById('cartCounter');
+        cartCounter.style.display = 'flex';
+        cartCounter.textContent = pizzas.length;
+
+        customerForm.classList.remove('hide');
+        orderContainer.firstElementChild.classList.add('hide');
+      });
+    });
   });
 
   pizzaContainer.insertAdjacentHTML(
@@ -181,35 +198,31 @@ async function basicScript() {
       now.getMinutes(),
     ];
 
-    console.log(name);
-
-    if (name !== '') {
-      fetch('/api/order', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
+    fetch('/api/order', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: 1,
+        pizzas,
+        date: {
+          year,
+          month,
+          day,
+          hour,
+          minute,
         },
-        body: JSON.stringify({
-          id: 1,
-          pizzas,
-          date: {
-            year,
-            month,
-            day,
-            hour,
-            minute,
+        customer: {
+          name,
+          email,
+          address: {
+            city,
+            street,
           },
-          customer: {
-            name,
-            email,
-            address: {
-              city,
-              street,
-            },
-          },
-        }),
-      });
-    }
+        },
+      }),
+    });
   });
 
   cartContainer.addEventListener('click', () =>
@@ -221,31 +234,50 @@ async function basicScript() {
     addToOrderBtn.addEventListener('click', (event) => {
       const id = Number(event.target.id.split('-')[1]);
       const amount = Number(document.getElementById(`amount-${id}`).value);
-      pizzas.push({ id, amount });
+      if (amount < 1) return;
+      const index = pizzas.findIndex((pizza) => pizza.id === id);
+      if (index !== -1) {
+        pizzas[index].amount += amount;
+      } else {
+        pizzas.push({ id, amount });
+      }
 
       const orderPart = document.getElementById('orders');
       removeAllChildren(orderPart);
       orderPart.insertAdjacentHTML('beforeend', cartComponent(pizzas).join(''));
 
       console.log(pizzas);
-      document.querySelectorAll('.removeButton').forEach(item => {
-        item.addEventListener('click', event => {
+      document.querySelectorAll('.removeButton').forEach((item) => {
+        item.addEventListener('click', (event) => {
           console.log(parseInt(event.target.id));
-          pizzas.forEach(element => element.id === parseInt(event.target.id) ? element.amount = element.amount - 1 : element);
-          pizzas.forEach(element => element.amount < 1 ? pizzas.splice(pizzas.indexOf(element), 1) : element);
+          pizzas.forEach((element) =>
+            element.id === parseInt(event.target.id)
+              ? (element.amount = element.amount - 1)
+              : element
+          );
+          pizzas.forEach((element) =>
+            element.amount < 1
+              ? pizzas.splice(pizzas.indexOf(element), 1)
+              : element
+          );
           removeAllChildren(orderPart);
-          orderPart.insertAdjacentHTML('beforeend', cartComponent(pizzas).join(''));
+          orderPart.insertAdjacentHTML(
+            'beforeend',
+            cartComponent(pizzas).join('')
+          );
           console.log('hello');
           console.log(pizzas);
-        })
-      })
+        });
+      });
 
       customerForm.classList.remove('hide');
+      const cartCounter = document.getElementById('cartCounter');
+      cartCounter.style.display = 'flex';
+      cartCounter.textContent = pizzas.length;
       orderContainer.firstElementChild.classList.add('hide');
     });
   });
 }
-
 
 function removeAllChildren(parent) {
   while (parent.firstChild) {

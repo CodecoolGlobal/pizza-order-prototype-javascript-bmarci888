@@ -1,10 +1,10 @@
 body {
-  background-image: url('protruding-squares.svg');
+  background-image: url('/public/assets/protruding-squares.svg');
 }
 
 @font-face {
   font-family: pizzaFont;
-  src: url(Lobster-Regular.ttf);
+  src: url(/public/assets/Lobster-Regular.ttf);
 }
 
 .homeContainer {
@@ -57,7 +57,7 @@ body {
 }
 
 .pizzaCard {
-  background-image: url('istockphoto-1365125616-612x612.jpg');
+  background-image: url('/public/assets/istockphoto-1365125616-612x612.jpg');
   width: 26%;
   height: 513px;
   padding: 16px;
@@ -90,7 +90,7 @@ body {
 .orderContainer {
   margin-top: 30px;
   margin-bottom: 50px;
-  background-image: url('istockphoto-1365125616-612x612.jpg');
+  background-image: url('/public/assets/istockphoto-1365125616-612x612.jpg');
   width: 25%;
   height: fit-content;
   padding: 16px;
@@ -102,7 +102,7 @@ body {
 }
 
 .buttons {
-  background-image: url('istockphoto-1365125616-612x612.jpg');
+  background-image: url('/public/assets/istockphoto-1365125616-612x612.jpg');
   color: white;
   font-size: 20px;
   font-family: pizzaFont;

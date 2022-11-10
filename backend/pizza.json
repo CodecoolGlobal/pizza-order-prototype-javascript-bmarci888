@@ -3,18 +3,10 @@
     {
       "id": 1,
       "name": "Hawaii",
-      "ingredients": [
-        "Tomato sauce",
-        "mozzarella cheese",
-        "ham",
-        "pineapple"
-      ],
+      "ingredients": ["Tomato sauce", "mozzarella cheese", "ham", "pineapple"],
       "price": 2390,
-      "allergens": [
-        1,
-        2
-      ],
-      "pizzaUrl": "/public/pngegg-2.png"
+      "allergens": [1, 2],
+      "pizzaUrl": "/public/assets/pngegg-2.png"
     },
     {
       "id": 2,
@@ -29,12 +21,8 @@
         "bacon"
       ],
       "price": 2590,
-      "allergens": [
-        1,
-        2,
-        3
-      ],
-      "pizzaUrl": "/public/pngegg.png"
+      "allergens": [1, 2, 3],
+      "pizzaUrl": "/public/assets/pngegg.png"
     },
     {
       "id": 3,
@@ -48,11 +36,8 @@
         "oregano"
       ],
       "price": 2790,
-      "allergens": [
-        1,
-        2
-      ],
-      "pizzaUrl": "/public/pngegg-3.png"
+      "allergens": [1, 2],
+      "pizzaUrl": "/public/assets/pngegg-3.png"
     },
     {
       "id": 4,
@@ -68,14 +53,8 @@
         "garlic"
       ],
       "price": 2890,
-      "allergens": [
-        1,
-        2,
-        5,
-        7,
-        8
-      ],
-      "pizzaUrl": "/public/pngegg-4.png"
+      "allergens": [1, 2, 5, 7, 8],
+      "pizzaUrl": "/public/assets/pngegg-4.png"
     },
     {
       "id": 5,
@@ -89,11 +68,8 @@
         "spicy pepperoni"
       ],
       "price": 2990,
-      "allergens": [
-        1,
-        2
-      ],
-      "pizzaUrl": "/public/pngegg-5.png"
+      "allergens": [1, 2],
+      "pizzaUrl": "/public/assets/pngegg-5.png"
     },
     {
       "id": 6,
@@ -108,14 +84,8 @@
         "BBQ sauce"
       ],
       "price": 3000,
-      "allergens": [
-        1,
-        2,
-        5,
-        7,
-        8
-      ],
-      "pizzaUrl": "/public/pngegg-7.png"
+      "allergens": [1, 2, 5, 7, 8],
+      "pizzaUrl": "/public/assets/pngegg-7.png"
     },
     {
       "id": 7,
@@ -129,14 +99,8 @@
         "extra virgin olive oil"
       ],
       "price": 3200,
-      "allergens": [
-        1,
-        2,
-        5,
-        7,
-        8
-      ],
-      "pizzaUrl": "/public/pngegg-6.png"
+      "allergens": [1, 2, 5, 7, 8],
+      "pizzaUrl": "/public/assets/pngegg-6.png"
     }
   ]
 }
